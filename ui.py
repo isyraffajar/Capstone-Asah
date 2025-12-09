@@ -47,6 +47,7 @@ elif page == "Data Exploration":
     st.subheader("Distribusi Recency")
     fig1, ax1 = plt.subplots(figsize=(8,4))
     sns.histplot(rfm['Recency'], bins=50, kde=True, ax=ax1)
+    
     ax1.set_xlabel("Recency (hari)")
     ax1.set_ylabel("Jumlah Customer")
     st.pyplot(fig1)
