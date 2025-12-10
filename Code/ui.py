@@ -279,27 +279,61 @@ elif page == "Modeling":
     st.markdown("""
     ### Ringkasan Model yang Digunakan
 
-    Pada notebook `CustomerSegmentation.ipynb` kami menggunakan dua pendekatan untuk menentukan dan membangun model clustering berbasis KMeans. Kedua versi tersebut sama-sama menggunakan KMeans namun berbeda pada metode pemilihan jumlah cluster (`k`):
+    KMeans adalah algoritma clustering yang membagi data ke dalam beberapa kelompok berdasarkan kemiripan. Algoritma ini bekerja dengan:
 
+    1. Menentukan pusat awal untuk setiap cluster.
+    2. Mengelompokkan data ke pusat terdekat.
+    3. Memperbarui posisi pusat berdasarkan rata-rata data dalam cluster.
+    4. Mengulang proses sampai pusat cluster stabil.
+
+    KMeans membantu melihat pola pelanggan, segmentasi perilaku, atau kelompok nilai RFM secara jelas sehingga lebih mudah membuat strategi bisnis.
+    """)
+    
+    st.markdown("""
+    ---
+    
+    ### Pra-proses sebelum Clustering
+    - Standarisasi/normalisasi (`StandardScaler`) pada fitur RFM (Recency, Frequency, Monetary) untuk menyamakan skala.
+    - Men   gunakan metrik `Recency` (hari sejak transaksi terakhir berdasarkan `snapshot_date`), `Frequency` (jumlah transaksi unik), dan `Monetary` (total belanja).
+
+    Untuk menentukan jumlah cluster (`k`), kami menggunakan:
     1. **Elbow Method (Inertia)**
         - Prinsip: Mengukur `inertia` (total sum of squared distances dari tiap titik ke pusat cluster). Untuk variasi `k`, kita plot inertia vs `k`.
         - Tujuan: Cari titik 'elbow' di grafik di mana penurunan inertia mulai melambat — itu seringkali menjadi pilihan `k` yang baik.
         - Kelebihan: Sederhana dan cepat; memberikan gambaran visual tentang trade-off antara jumlah cluster dan reduksi error.
-        - Keterbatasan: Kadang elbow tidak jelas (kurva halus) sehingga pemilihan `k` bisa subjektif.
+    Untuk hasil kami, elbow terlihat pada `k=3`. Perhatikan chart berikut.
+    """)
+
+    st.image("../assets/elbowMethod.png", use_container_width=True)
+
+    st.markdown("""
+    Keterbatasan: Kadang elbow tidak jelas (kurva halus) sehingga pemilihan `k` bisa subjektif.
 
     2. **Silhouette Score**
         - Prinsip: Untuk tiap titik, silhouette mengukur seberapa mirip titik dengan cluster-nya sendiri dibanding cluster terdekat lainnya. Nilainya berada di rentang -1 sampai +1.
         - Tujuan: Untuk setiap `k`, hitung skor silhouette rata‑rata; pilih `k` dengan skor tertinggi.
         - Kelebihan: Memberikan ukuran kuantitatif kualitas cluster (kohesi vs pemisahan).
         - Keterbatasan: Bisa bias terhadap cluster berukuran seimbang dan kurang cocok bila ada banyak outlier/skala berbeda.
+    Untuk hasil kami, silhouette score tertinggi terjadi pada `k=4`. Perhatikan chart berikut.
+    """)
 
+    st.image("../assets/silhouetteMethod.png", use_container_width=True)
+
+    st.markdown("""
+    
+        Keterbatasan: Kadang skor bisa menyesatkan jika cluster sangat tidak seimbang atau data memiliki noise tinggi.        
+    
+    3. **Gabungan Elbow & Silhouette**
+    
+    Metode ini memakai pendekatan gabungan antara Elbow dan Silhouette. Nilai k awal ditentukan dari titik siku pada grafik Elbow, lalu k tersebut dievaluasi bersama k di sekitarnya (k–1 dan k+1). Setiap kandidat dihitung skor Silhouette-nya, kemudian k dengan skor tertinggi dipilih sebagai jumlah cluster final. Pendekatan ini membantu memilih jumlah cluster yang stabil dan memiliki pemisahan antar cluster yang baik.
+    ```
+    Jumlah cluster berdasarkan Elbow: 3
+    Silhouette Scores untuk k>=3: > {3: 0.5940, 4: 0.6163, 5: 0.6041, 6: 0.5960, 7: 0.5186, 8: 0.4791, 9: 0.4261, 10: 0.4178}
+    Jumlah cluster terpilih (gabungan Elbow & Silhouette): 4
+    ```         
     ---
-
-    **Pra‑proses yang dilakukan sebelum clustering**
-    - Standarisasi/normalisasi (`StandardScaler`) pada fitur RFM (Recency, Frequency, Monetary) untuk menyamakan skala.
-    - Menggunakan metrik `Recency` (hari sejak transaksi terakhir berdasarkan `snapshot_date`), `Frequency` (jumlah transaksi unik), dan `Monetary` (total belanja).
-
-    **Bagaimana kami menggunakan kedua pendekatan**
+    
+    ### Modeling dan Visualisasi Hasil
     - Kami menjalankan KMeans pada data RFM yang telah discaling dan mengevaluasi beberapa nilai `k` menggunakan Elbow Method dan Silhouette Score.
     - Hasilnya kami simpan dua versi model (versi `k` dari Elbow dan versi `k` dari Silhouette) untuk dibandingkan lebih lanjut dengan visualisasi (PCA dan plot 2D/3D) dan silhouette score final.
 
@@ -310,9 +344,6 @@ elif page == "Modeling":
 
     Jika Anda mau, saya bisa tambahkan ringkasan centroid dan contoh label cluster otomatis pada halaman ini.
     """)
-
-    
-    
 
 elif page == "Insights":
         st.header("Insights")
