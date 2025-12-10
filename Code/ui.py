@@ -10,7 +10,7 @@ from sklearn.metrics import silhouette_score
 
 
 rfm = pd.read_csv("../Dataset/rfm.csv", encoding="latin1")
-rfmc = pd.read_csv("../Dataset/rfm_with_clusters.csv")
+rfmc = pd.read_csv("../Dataset/rfm_with_clusters.csv", encoding="latin1")
 df = pd.read_csv("../Dataset/OnlineRetail.csv", encoding="latin1")
 
 st.title("Capstone Project - Asah")
@@ -317,6 +317,7 @@ elif page == "Modeling":
         - Keterbatasan: Bisa bias terhadap cluster berukuran seimbang dan kurang cocok bila ada banyak outlier/skala berbeda.
     Untuk hasil kami, silhouette score tertinggi terjadi pada `k=4`. Perhatikan chart berikut.
     """)
+<<<<<<< Updated upstream
 
     st.image("../assets/silhouetteMethod.png", use_container_width=True)
 
@@ -349,12 +350,35 @@ elif page == "Modeling":
     **Silhouette Score model final:** `0.6162696093073907`
 
     Skor ini menunjukkan kualitas pemisahan cluster yang baik, dengan jarak antar-cluster cukup terpisah dan kohesi di dalam cluster tinggi.
+=======
+>>>>>>> Stashed changes
 
+    st.image("../assets/silhouetteMethod.png", use_container_width=True)
+
+    st.markdown("""
+    
+        Keterbatasan: Kadang skor bisa menyesatkan jika cluster sangat tidak seimbang atau data memiliki noise tinggi.        
+    
+    3. **Gabungan Elbow & Silhouette**
+    
+    Metode ini memakai pendekatan gabungan antara Elbow dan Silhouette. Nilai k awal ditentukan dari titik siku pada grafik Elbow, lalu k tersebut dievaluasi bersama k di sekitarnya (k–1 dan k+1). Setiap kandidat dihitung skor Silhouette-nya, kemudian k dengan skor tertinggi dipilih sebagai jumlah cluster final. Pendekatan ini membantu memilih jumlah cluster yang stabil dan memiliki pemisahan antar cluster yang baik.
+    ```
+    Jumlah cluster berdasarkan Elbow: 3
+    Silhouette Scores untuk k>=3: > {3: 0.5940, 4: 0.6163, 5: 0.6041, 6: 0.5960, 7: 0.5186, 8: 0.4791, 9: 0.4261, 10: 0.4178}
+    Jumlah cluster terpilih (gabungan Elbow & Silhouette): 4
+    ```         
     ---
+<<<<<<< Updated upstream
 
     ### Visualisasi Hasil Clustering
 
     Beberapa visualisasi digunakan untuk memahami struktur cluster secara lebih jelas.
+=======
+    
+    ### Modeling dan Visualisasi Hasil
+    - Kami menjalankan KMeans pada data RFM yang telah discaling dan mengevaluasi beberapa nilai `k` menggunakan Elbow Method dan Silhouette Score.
+    - Hasilnya kami simpan dua versi model (versi `k` dari Elbow dan versi `k` dari Silhouette) untuk dibandingkan lebih lanjut dengan visualisasi (PCA dan plot 2D/3D) dan silhouette score final.
+>>>>>>> Stashed changes
 
     #### 1. Scatter Plot Berdasarkan Pasangan Fitur
     Visualisasi ini membantu melihat persebaran cluster dalam ruang 2D:
