@@ -10,6 +10,7 @@ from sklearn.metrics import silhouette_score
 
 
 rfm = pd.read_csv("../Dataset/rfm.csv", encoding="latin1")
+rfmc = pd.read_csv("../Dataset/rfm_with_clusters.csv")
 df = pd.read_csv("../Dataset/OnlineRetail.csv", encoding="latin1")
 
 st.title("Capstone Project - Asah")
@@ -238,3 +239,259 @@ elif page == "Insights":
         - **Rekomendasi singkat:** Gunakan centroid cluster untuk memberi label bisnis (contoh: `Best Customers`, `Potential Loyal`, `At Risk`, `Low Value`), jalankan kampanye re‑engagement pada cluster dengan `Recency` tinggi, dan program loyalitas pada cluster dengan `Frequency` tinggi. Lakukan validasi bisnis sebelum menerapkan tindakan otomatis.
 
         """)
+        st.dataframe(rfmc.groupby('Cluster')[['Recency','Frequency','Monetary']].mean())
+
+        st.subheader("Ranking Cluster")
+        # Hitung mean RFM tiap cluster
+        cluster_stats = rfmc.groupby("Cluster").agg({
+            "R_norm": "mean",
+            "F_norm": "mean",
+            "M_norm": "mean"
+        }).reset_index()
+
+        # Buat ranking
+        cluster_stats["Recency_rank"] = cluster_stats["R_norm"].rank(ascending=True)   # Recency kecil lebih baik
+        cluster_stats["Frequency_rank"] = cluster_stats["F_norm"].rank(ascending=False) # Frequency besar lebih baik
+        cluster_stats["Monetary_rank"] = cluster_stats["M_norm"].rank(ascending=False)   # Monetary besar lebih baik
+
+        # Total ranking
+        cluster_stats["RFM_rank"] = (cluster_stats["Recency_rank"] + cluster_stats["Frequency_rank"] + cluster_stats["Monetary_rank"]) / 3
+
+        # Urutkan cluster dari ranking terbaik ke terburuk
+        cluster_stats = cluster_stats.sort_values("RFM_rank")
+
+        # Print tabel
+        print("Cluster dengan ranking terbaik berdasarkan RFM:")
+        st.dataframe(cluster_stats)
+
+        grouped_cluster = rfmc.groupby("Cluster")
+        # 1. Tentukan kolom yang tidak ingin ditampilkan
+        excluded_cols = ["CustomerID", "Cluster", "R_norm", "F_norm", "M_norm"]
+
+        # 2. Buat list kolom target (ini akan menjadi Judul Tab)
+        target_columns = [col for col in rfmc.columns if col not in excluded_cols]
+
+        # 3. Buat Tabs berdasarkan list nama kolom tersebut
+        tabs = st.tabs(target_columns)
+
+        # 4. Loop secara bersamaan antara objek Tab dan Nama Kolom
+        for tab, col_name in zip(tabs, target_columns):
+            with tab:
+                st.subheader(f"Statistik untuk {col_name}")
+                
+                # Menampilkan tabel describe
+                st.dataframe(
+                    grouped_cluster[col_name].describe(), 
+                    use_container_width=True  # Agar tabel memenuhi lebar tab
+                )
+
+        st.subheader("Karakteristik tiap cluster")
+
+        tab1, tab2, tab3, tab4 = st.tabs(["Cluster 0", "Cluster 1", "Cluster 2", "Cluster 3"])
+
+        with tab1:
+            st.header("Cluster 0 – Cluster Regular (RFM_rank 3)")
+            cluster0 = rfmc[rfmc['Cluster']==0]
+
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.header("Recency")
+                fig7, ax7 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster0['Recency'], kde=True, color='skyblue')
+                ax7.set_title('Recency Distribution - Cluster 0')
+                ax7.set_xlabel('Recency')
+                ax7.set_ylabel('Count')
+                st.pyplot(fig7)
+
+            with col2:
+                st.header("Frequency")
+                fig8, ax8 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster0['Frequency'], kde=True, color='skyblue')
+                ax8.set_title('Frequency Distribution - Cluster 0')
+                ax8.set_xlabel('Frequency')
+                ax8.set_ylabel('Count')
+                st.pyplot(fig8)
+
+            with col3:
+                st.header("Monetary")
+                fig9, ax9 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster0['Monetary'], kde=True, color='skyblue')
+                ax9.set_title('Monetary Distribution - Cluster 0')
+                ax9.set_xlabel('Monetary')
+                ax9.set_ylabel('Count')
+                st.pyplot(fig9)
+            st.markdown("""
+                - Recency 43.84 → pembelian terakhir agak lama.
+                - Frequency 3.63 → jarang membeli.
+                - Monetary 1.322 → nilai belanja rendah.
+                - Insight: Pelanggan kurang aktif dan bernilai rendah. 
+                - Strategi:
+                    - Kirim reminder, voucher, atau promo khusus untuk mengembalikan mereka.
+                    - Edukasi produk atau highlight benefit agar tertarik membeli lagi.
+                """)
+        with tab2:
+            st.header("Cluster 1 – Cluster Dormant (RFM_rank 4)")
+            cluster1 = rfmc[rfmc['Cluster']==1]
+
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.header("Recency")
+                fig7, ax7 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster1['Recency'], kde=True, color='skyblue')
+                ax7.set_title('Recency Distribution - Cluster 1')
+                ax7.set_xlabel('Recency')
+                ax7.set_ylabel('Count')
+                st.pyplot(fig7)
+
+            with col2:
+                st.header("Frequency")
+                fig8, ax8 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster1['Frequency'], kde=True, color='skyblue')
+                ax8.set_title('Frequency Distribution - Cluster 1')
+                ax8.set_xlabel('Frequency')
+                ax8.set_ylabel('Count')
+                st.pyplot(fig8)
+
+            with col3:
+                st.header("Monetary")
+                fig9, ax9 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster1['Monetary'], kde=True, color='skyblue')
+                ax9.set_title('Monetary Distribution - Cluster 1')
+                ax9.set_xlabel('Monetary')
+                ax9.set_ylabel('Count')
+                st.pyplot(fig9)
+            st.markdown("""
+                - Recency 248.54 → sudah lama tidak membeli.
+                - Frequency 1.54 → hampir tidak pernah membeli.
+                - Monetary 474.12 → nilai belanja sangat rendah.
+                - Insight: Pelanggan sangat tidak aktif dan bernilai rendah. 
+                - Strategi: 
+                    - Fokus kampanye reaktivasi dengan diskon atau penawaran spesial.
+                    - Evaluasi apakah perlu tetap dimasukkan dalam target pemasaran.
+                """)
+        with tab3:
+            st.header("Cluster 2 – Cluster High Value Loyalist (RFM_rank 1)")
+            cluster2 = rfmc[rfmc['Cluster']==2]
+
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.header("Recency")
+                fig7, ax7 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster2['Recency'], kde=True, color='skyblue')
+                ax7.set_title('Recency Distribution - Cluster 2')
+                ax7.set_xlabel('Recency')
+                ax7.set_ylabel('Count')
+                st.pyplot(fig7)
+
+            with col2:
+                st.header("Frequency")
+                fig8, ax8 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster2['Frequency'], kde=True, color='skyblue')
+                ax8.set_title('Frequency Distribution - Cluster 2')
+                ax8.set_xlabel('Frequency')
+                ax8.set_ylabel('Count')
+                st.pyplot(fig8)
+
+            with col3:
+                st.header("Monetary")
+                fig9, ax9 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster2['Monetary'], kde=True, color='skyblue')
+                ax9.set_title('Monetary Distribution - Cluster 2')
+                ax9.set_xlabel('Monetary')
+                ax9.set_ylabel('Count')
+                st.pyplot(fig9)
+            st.markdown("""
+                - Recency 7.38 → pelanggan baru-baru ini membeli.
+                - Frequency 81.77 → pelanggan sering membeli.
+                - Monetary 125.712 → pelanggan bernilai transaksi sangat tinggi.
+                - Insight: Ini pelanggan paling loyal dan bernilai tinggi. 
+                - Strategi: 
+                    - Target promo eksklusif, reward, atau membership.
+                    - Pertahankan loyalitas dengan program khusus atau early access produk baru.
+                """)
+        with tab4:
+            st.header("Cluster 3 – Cluster Potensial Loyal (RFM_rank 2)")
+            cluster3 = rfmc[rfmc['Cluster']==3]
+
+            col1, col2, col3 = st.columns(3)
+
+            with col1:
+                st.header("Recency")
+                fig7, ax7 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster3['Recency'], kde=True, color='skyblue')
+                ax7.set_title('Recency Distribution - Cluster 3')
+                ax7.set_xlabel('Recency')
+                ax7.set_ylabel('Count')
+                st.pyplot(fig7)
+
+            with col2:
+                st.header("Frequency")
+                fig8, ax8 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster3['Frequency'], kde=True, color='skyblue')
+                ax8.set_title('Frequency Distribution - Cluster 3')
+                ax8.set_xlabel('Frequency')
+                ax8.set_ylabel('Count')
+                st.pyplot(fig8)
+
+            with col3:
+                st.header("Monetary")
+                fig9, ax9 = plt.subplots(figsize=(6,4))
+                sns.histplot(cluster3['Monetary'], kde=True, color='skyblue')
+                ax9.set_title('Monetary Distribution - Cluster 3')
+                ax9.set_xlabel('Monetary')
+                ax9.set_ylabel('Count')
+                st.pyplot(fig9)
+            st.markdown("""
+                - Recency 15.39 → pembelian terakhir masih relatif baru.
+                - Frequency 21.97 → frekuensi beli sedang.
+                - Monetary 12.240 → nilai transaksi belanja sedang.
+                - Insight: Pelanggan cukup aktif dan bernilai sedang. 
+                - Strategi: 
+                    - Dorong frekuensi beli dengan bundling produk atau upsell.
+                    - Kirim penawaran menarik agar lebih sering bertransaksi.
+                """)
+        
+        tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(["Loyalist", "Big Spender", "Best Customers", "Customer Paling Baru", "At Risk Customers", "Regular Cust"])
+        with tab1 :
+            st.header("Loyalist")
+            loyal_cust = rfmc[rfmc['Cluster'] == 2].sort_values(by='Frequency', ascending=False)
+            st.dataframe(loyal_cust.head(10))
+        with tab2 :
+            st.header("Big Spender")
+            most_spent_cust = rfmc[rfmc['Cluster'] == 2].sort_values(by='Monetary', ascending=False)
+            st.dataframe(most_spent_cust.head(10))
+        with tab3 :
+            st.header("Best Customers")
+            best_customers = rfmc.sort_values('RFM_weighted', ascending=False)
+            st.dataframe(best_customers.head(10))
+        with tab4 :
+            st.header("Customer Paling Baru")
+            newest_cust = rfmc.sort_values(
+                by=['R_norm', 'F_norm'], 
+                ascending=[False, True]
+            )
+            st.dataframe(newest_cust.head(10))
+        with tab5 :
+            st.header("At Risk Customers")
+            at_risk_cust = rfmc.sort_values(
+                by=['R_norm', 'F_norm', 'M_norm'],
+                ascending=[True, False, False]
+            )
+            st.dataframe(at_risk_cust.head(10))
+        with tab6 :
+            st.header("Regular Cust")
+            # Hitung kuartil
+            R_low, R_high = rfmc['R_norm'].quantile([0.25, 0.75])
+            F_low, F_high = rfmc['F_norm'].quantile([0.25, 0.75])
+            M_low, M_high = rfmc['M_norm'].quantile([0.25, 0.75])
+
+            # Filter customer regular
+            regular_cust = rfmc[
+                (rfmc['R_norm'] >= R_low) & (rfmc['R_norm'] <= R_high) &
+                (rfmc['F_norm'] >= F_low) & (rfmc['F_norm'] <= F_high) &
+                (rfmc['M_norm'] >= M_low) & (rfmc['M_norm'] <= M_high)
+            ]
+            st.dataframe(regular_cust.head(10))
