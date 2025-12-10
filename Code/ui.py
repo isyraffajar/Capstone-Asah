@@ -9,9 +9,9 @@ from sklearn.cluster import KMeans
 from sklearn.metrics import silhouette_score
 
 
-rfm = pd.read_csv("../Dataset/rfm.csv", encoding="latin1")
-rfmc = pd.read_csv("../Dataset/rfm_with_clusters.csv", encoding="latin1")
-df = pd.read_csv("../Dataset/OnlineRetail.csv", encoding="latin1")
+rfm = pd.read_csv("Dataset/rfm.csv", encoding="latin1")
+rfmc = pd.read_csv("Dataset/rfm_with_clusters.csv", encoding="latin1")
+df = pd.read_csv("Dataset/OnlineRetail.csv", encoding="latin1")
 
 st.title("Capstone Project - Asah")
 st.sidebar.title("Page")
@@ -52,7 +52,7 @@ elif page == "Data Exploration":
     """)
 
     st.subheader("Grafik Top 10 Customer Spending")
-    st.image("../Assets/top10spending.png", use_container_width=True)
+    st.image("Assets/top10spending.png", use_container_width=True)
     st.markdown("""
     #### Insight yang didapat
                 
@@ -72,7 +72,7 @@ elif page == "Data Exploration":
     """)
 
     st.subheader("Grafik Top 10 Prouk Unit Terjual Terbanyak")
-    st.image("../Assets/top10itemQuantity.png", use_container_width=True)
+    st.image("Assets/top10itemQuantity.png", use_container_width=True)
     st.markdown("""
     #### Insight yang didapat
 
@@ -97,7 +97,7 @@ elif page == "Data Exploration":
     """)
 
     st.subheader("Grafik Top 10 Produk Paling Laku")
-    st.image("../Assets/top10itemSold.png", use_container_width=True)
+    st.image("Assets/top10itemSold.png", use_container_width=True)
     st.markdown("""
     #### Insight yang didapat
 
@@ -119,7 +119,7 @@ elif page == "Data Exploration":
     """)
 
     st.subheader("Grafik Total Penjualan Dari Tiap Negara")
-    st.image("../Assets/pareto.png", use_container_width=True)
+    st.image("Assets/pareto.png", use_container_width=True)
     st.markdown("""
     #### Insight yang didapat
 
@@ -305,7 +305,7 @@ elif page == "Modeling":
     Untuk hasil kami, elbow terlihat pada `k=3`. Perhatikan chart berikut.
     """)
 
-    st.image("../assets/elbowMethod.png", use_container_width=True)
+    st.image("assets/elbowMethod.png", use_container_width=True)
 
     st.markdown("""
     Keterbatasan: Kadang elbow tidak jelas (kurva halus) sehingga pemilihan `k` bisa subjektif.
@@ -318,7 +318,7 @@ elif page == "Modeling":
     Untuk hasil kami, silhouette score tertinggi terjadi pada `k=4`. Perhatikan chart berikut.
     """)
 
-    st.image("../assets/silhouetteMethod.png", use_container_width=True)
+    st.image("assets/silhouetteMethod.png", use_container_width=True)
 
     st.markdown("""
     
@@ -347,9 +347,9 @@ elif page == "Modeling":
 
     """)
 
-    st.image("../assets/RvsMclusterplot.png", caption="Cluster Plot (Recency vs Monetary)", use_container_width=True)
-    st.image("../assets/RvsFclusterplot.png", caption="Cluster Plot (Recency vs Frequency)", use_container_width=True)
-    st.image("../assets/FvsMclusterplot.png", caption="Cluster Plot (Monetary vs Frequency)", use_container_width=True)
+    st.image("assets/RvsMclusterplot.png", caption="Cluster Plot (Recency vs Monetary)", use_container_width=True)
+    st.image("assets/RvsFclusterplot.png", caption="Cluster Plot (Recency vs Frequency)", use_container_width=True)
+    st.image("assets/FvsMclusterplot.png", caption="Cluster Plot (Monetary vs Frequency)", use_container_width=True)
 
     st.markdown("""
 
@@ -359,7 +359,7 @@ elif page == "Modeling":
 
     """)
 
-    st.image("../assets/3DCluster.png", caption="3D Cluster Visualization (RFM)", use_container_width=True)
+    st.image("assets/3DCluster.png", caption="3D Cluster Visualization (RFM)", use_container_width=True)
 
     st.markdown("""
 
@@ -369,7 +369,7 @@ elif page == "Modeling":
 
     """)
 
-    st.image("../assets/PCAVisualization.png", caption="Visualisasi Clustering KMeans (PCA)", use_container_width=True)
+    st.image("assets/PCAVisualization.png", caption="Visualisasi Clustering KMeans (PCA)", use_container_width=True)
 
     st.markdown("""
     ---
@@ -398,7 +398,7 @@ elif page == "Insights":
             - `Recency`: selisih hari antara `snapshot_date` dan tanggal transaksi terakhir pelanggan (di notebook `snapshot_date = df['InvoiceDate'].max() + pd.Timedelta(days=1)`).
             - `Frequency`: jumlah `InvoiceNo` unik per pelanggan.
             - `Monetary`: total belanja (`TotalPrice`) per pelanggan.
-            Hasil RFM disimpan ke file `../Dataset/rfm.csv`.
+            Hasil RFM disimpan ke file `Dataset/rfm.csv`.
 
         - **Visualisasi & Insight:** Plot distribusi RFM (histogram), heatmap korelasi, serta scatterplot untuk hubungan antar metrik (Recency vs Monetary, Monetary vs Frequency, Frequency vs Recency). Insight bisnis diekstrak (mis. identifikasi pelanggan bernilai tinggi, pelanggan berisiko churn).
 
