@@ -334,16 +334,73 @@ elif page == "Modeling":
     ```         
     ---
     
-    ### Modeling dan Visualisasi Hasil
-    - Kami menjalankan KMeans pada data RFM yang telah discaling dan mengevaluasi beberapa nilai `k` menggunakan Elbow Method dan Silhouette Score.
-    - Hasilnya kami simpan dua versi model (versi `k` dari Elbow dan versi `k` dari Silhouette) untuk dibandingkan lebih lanjut dengan visualisasi (PCA dan plot 2D/3D) dan silhouette score final.
+    ### Modeling
 
-    **Interpretasi hasil & saran bisnis**
-    - Gunakan centroid cluster (rata‑rata Recency, Frequency, Monetary per cluster) untuk memberi label bisnis: mis. `Best Customers`, `Potential Loyal`, `At Risk`, `Low Value`.
-    - Targeting: kirim promosi re‑engagement ke cluster dengan Recency tinggi; loyalty program untuk cluster dengan Frequency tinggi.
-    - Validasi: selain metrik internal (inertia/silhouette), lakukan pengecekan manual terhadap ukuran cluster dan representasi pelanggan bisnis.
+    Proses modeling menggunakan jumlah cluster optimal berdasarkan pendekatan gabungan Elbow dan Silhouette. Model KMeans dilatih menggunakan nilai fitur yang sudah dinormalisasi (`StandardScaler`) pada tiga variabel utama: Recency, Frequency, dan Monetary. Hasil akhir berupa label cluster untuk setiap pelanggan.
 
-    Jika Anda mau, saya bisa tambahkan ringkasan centroid dan contoh label cluster otomatis pada halaman ini.
+    #### 1. Penerapan KMeans
+    Model KMeans dijalankan menggunakan jumlah cluster terbaik (`k=4`). Setiap pelanggan menerima label cluster berdasarkan kedekatan terhadap pusat cluster (centroid). Model ini memungkinkan analisis segmentasi pelanggan secara lebih terstruktur.
+
+    Setelah pelatihan, dilakukan perhitungan **rata-rata RFM pada tiap cluster** untuk melihat karakteristik umum masing-masing kelompok, sehingga Anda bisa memahami pola perilaku dan nilai pelanggan pada setiap cluster.
+
+    #### 2. Evaluasi Model
+    Model dievaluasi menggunakan Silhouette Score. Nilainya:
+
+    **Silhouette Score model final:** `0.6162696093073907`
+
+    Skor ini menunjukkan kualitas pemisahan cluster yang baik, dengan jarak antar-cluster cukup terpisah dan kohesi di dalam cluster tinggi.
+
+    ---
+
+    ### Visualisasi Hasil Clustering
+
+    Beberapa visualisasi digunakan untuk memahami struktur cluster secara lebih jelas.
+
+    #### 1. Scatter Plot Berdasarkan Pasangan Fitur
+    Visualisasi ini membantu melihat persebaran cluster dalam ruang 2D:
+
+    - Recency vs Monetary
+    - Recency vs Frequency
+    - Monetary vs Frequency
+
+    """)
+
+    st.image("../assets/RvsMclusterplot.png", caption="Cluster Plot (Recency vs Monetary)", use_container_width=True)
+    st.image("../assets/RvsFclusterplot.png", caption="Cluster Plot (Recency vs Frequency)", use_container_width=True)
+    st.image("../assets/FvsMclusterplot.png", caption="Cluster Plot (Monetary vs Frequency)", use_container_width=True)
+
+    st.markdown("""
+
+    #### 2. Visualisasi 3D RFM
+
+    Visualisasi tiga dimensi memberikan gambaran menyeluruh tentang pembentukan cluster di ruang RFM.
+
+    """)
+
+    st.image("../assets/3DCluster.png", caption="3D Cluster Visualization (RFM)", use_container_width=True)
+
+    st.markdown("""
+
+    #### 3. PCA 2D Projection
+
+    Dimensi data direduksi menggunakan PCA menjadi dua komponen utama untuk memudahkan visualisasi pola cluster. Proyeksi ini membantu melihat pemisahan border antar cluster tanpa kehilangan informasi penting.
+
+    """)
+
+    st.image("../assets/PCAVisualization.png", caption="Visualisasi Clustering KMeans (PCA)", use_container_width=True)
+
+    st.markdown("""
+    ---
+
+    ### Ringkasan Halaman Modeling
+
+    - Jumlah cluster optimal: `4`
+    - Teknik evaluasi: **Elbow + Silhouette**
+    - Skor evaluasi model: `0.6162696093073907`
+    - Visualisasi menunjukkan pemisahan cluster yang jelas
+    - Cluster dapat digunakan untuk segmentasi pelanggan berbasis RFM
+
+    ---
     """)
 
 elif page == "Insights":
