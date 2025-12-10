@@ -10,7 +10,7 @@ from sklearn.metrics import silhouette_score
 
 
 rfm = pd.read_csv("../Dataset/rfm.csv", encoding="latin1")
-rfmc = pd.read_csv("../Dataset/rfm_with_clusters.csv")
+rfmc = pd.read_csv("../Dataset/rfm_with_clusters.csv", encoding="latin1")
 df = pd.read_csv("../Dataset/OnlineRetail.csv", encoding="latin1")
 
 st.title("Capstone Project - Asah")
@@ -334,27 +334,9 @@ elif page == "Modeling":
     ```         
     ---
     
-    ### Modeling
-
-    Proses modeling menggunakan jumlah cluster optimal berdasarkan pendekatan gabungan Elbow dan Silhouette. Model KMeans dilatih menggunakan nilai fitur yang sudah dinormalisasi (`StandardScaler`) pada tiga variabel utama: Recency, Frequency, dan Monetary. Hasil akhir berupa label cluster untuk setiap pelanggan.
-
-    #### 1. Penerapan KMeans
-    Model KMeans dijalankan menggunakan jumlah cluster terbaik (`k=4`). Setiap pelanggan menerima label cluster berdasarkan kedekatan terhadap pusat cluster (centroid). Model ini memungkinkan analisis segmentasi pelanggan secara lebih terstruktur.
-
-    Setelah pelatihan, dilakukan perhitungan **rata-rata RFM pada tiap cluster** untuk melihat karakteristik umum masing-masing kelompok, sehingga Anda bisa memahami pola perilaku dan nilai pelanggan pada setiap cluster.
-
-    #### 2. Evaluasi Model
-    Model dievaluasi menggunakan Silhouette Score. Nilainya:
-
-    **Silhouette Score model final:** `0.6162696093073907`
-
-    Skor ini menunjukkan kualitas pemisahan cluster yang baik, dengan jarak antar-cluster cukup terpisah dan kohesi di dalam cluster tinggi.
-
-    ---
-
-    ### Visualisasi Hasil Clustering
-
-    Beberapa visualisasi digunakan untuk memahami struktur cluster secara lebih jelas.
+    ### Modeling dan Visualisasi Hasil
+    - Kami menjalankan KMeans pada data RFM yang telah discaling dan mengevaluasi beberapa nilai `k` menggunakan Elbow Method dan Silhouette Score.
+    - Hasilnya kami simpan dua versi model (versi `k` dari Elbow dan versi `k` dari Silhouette) untuk dibandingkan lebih lanjut dengan visualisasi (PCA dan plot 2D/3D) dan silhouette score final.
 
     #### 1. Scatter Plot Berdasarkan Pasangan Fitur
     Visualisasi ini membantu melihat persebaran cluster dalam ruang 2D:
