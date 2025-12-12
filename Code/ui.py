@@ -305,7 +305,7 @@ elif page == "Modeling":
     Untuk hasil kami, elbow terlihat pada `k=3`. Perhatikan chart berikut.
     """)
 
-    st.image("assets/elbowMethod.png", use_container_width=True)
+    st.image("Assets/elbowMethod.png", use_container_width=True)
 
     st.markdown("""
     Keterbatasan: Kadang elbow tidak jelas (kurva halus) sehingga pemilihan `k` bisa subjektif.
@@ -318,7 +318,7 @@ elif page == "Modeling":
     Untuk hasil kami, silhouette score tertinggi terjadi pada `k=4`. Perhatikan chart berikut.
     """)
 
-    st.image("assets/silhouetteMethod.png", use_container_width=True)
+    st.image("Assets/silhouetteMethod.png", use_container_width=True)
 
     st.markdown("""
     
@@ -347,9 +347,9 @@ elif page == "Modeling":
 
     """)
 
-    st.image("assets/RvsMclusterplot.png", caption="Cluster Plot (Recency vs Monetary)", use_container_width=True)
-    st.image("assets/RvsFclusterplot.png", caption="Cluster Plot (Recency vs Frequency)", use_container_width=True)
-    st.image("assets/FvsMclusterplot.png", caption="Cluster Plot (Monetary vs Frequency)", use_container_width=True)
+    st.image("Assets/RvsMclusterplot.png", caption="Cluster Plot (Recency vs Monetary)", use_container_width=True)
+    st.image("Assets/RvsFclusterplot.png", caption="Cluster Plot (Recency vs Frequency)", use_container_width=True)
+    st.image("Assets/FvsMclusterplot.png", caption="Cluster Plot (Monetary vs Frequency)", use_container_width=True)
 
     st.markdown("""
 
@@ -359,7 +359,7 @@ elif page == "Modeling":
 
     """)
 
-    st.image("assets/3DCluster.png", caption="3D Cluster Visualization (RFM)", use_container_width=True)
+    st.image("Assets/3DCluster.png", caption="3D Cluster Visualization (RFM)", use_container_width=True)
 
     st.markdown("""
 
@@ -369,7 +369,7 @@ elif page == "Modeling":
 
     """)
 
-    st.image("assets/PCAVisualization.png", caption="Visualisasi Clustering KMeans (PCA)", use_container_width=True)
+    st.image("Assets/PCAVisualization.png", caption="Visualisasi Clustering KMeans (PCA)", use_container_width=True)
 
     st.markdown("""
     ---
