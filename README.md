@@ -89,6 +89,16 @@ Halaman ini memberikan rekomendasi bisnis dengan memfilter pelanggan ke dalam ka
   * **At Risk Customers**: Pelanggan yang dulu sering bertransaksi tapi sudah lama tidak kembali (Recency tinggi).
   * **Regular Customers**: Pelanggan dengan pola transaksi rata-rata (menengah).
 
+### 5\. Run Model
+
+Halaman ini digunakan untuk mencoba input data Customer secara manual, kemudian model yang sudah dilatih sebelumnya akan menentukan Data tersebut masuk ke Cluster mana.
+
+**Fitur:**
+
+  * **Input Manual (Sidebar)**: Masukkan nilai *Recency*, *Frequency*, dan *Monetary* satu per satu untuk melihat hasil segmen pelanggan tersebut secara instan.
+  * **Visualisasi Distribusi**: Grafik batang interaktif (Plotly) yang menunjukkan persebaran hasil prediksi.
+  * **Download Hasil**: Unduh hasil segmentasi massal ke dalam format CSV.
+
 ## ⚙️ Cara Menjalankan
 
 ### Langkah 1: Instalasi
