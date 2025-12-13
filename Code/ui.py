@@ -14,14 +14,14 @@ rfm = pd.read_csv("Dataset/rfm.csv", encoding="latin1")
 rfmc = pd.read_csv("Dataset/rfm_with_clusters.csv", encoding="latin1")
 df = pd.read_csv("Dataset/OnlineRetail.csv", encoding="latin1")
 
-def make_arrow_safe(df):
-    df_safe = df.copy()
-    for col in df_safe.columns:
-        if df_safe[col].dtype == "object":
-            df_safe[col] = df_safe[col].astype(str)
-    return df_safe
+# def make_arrow_safe(df):
+#     df_safe = df.copy()
+#     for col in df_safe.columns:
+#         if df_safe[col].dtype == "object":
+#             df_safe[col] = df_safe[col].astype(str)
+#     return df_safe
 
-df_safe = make_arrow_safe(df)
+# df_safe = make_arrow_safe(df)
 
 st.title("Capstone Project - Asah")
 st.sidebar.title("Page")
@@ -32,64 +32,64 @@ if page == "Home":
     st.header("Welcome to the Capstone Project - Asah")
     st.subheader("Dataset Preview")
 
-    PAGE_SIZE = 1000
-    TOTAL_ROWS = len(df)
-    TOTAL_PAGES = (TOTAL_ROWS - 1) // PAGE_SIZE + 1
+    # PAGE_SIZE = 1000
+    # TOTAL_ROWS = len(df)
+    # TOTAL_PAGES = (TOTAL_ROWS - 1) // PAGE_SIZE + 1
 
-    # Init state
-    if "page" not in st.session_state:
-        st.session_state.page = 1
+    # # Init state
+    # if "page" not in st.session_state:
+    #     st.session_state.page = 1
 
-    start = (st.session_state.page - 1) * PAGE_SIZE
-    end = min(start + PAGE_SIZE, TOTAL_ROWS)
+    # start = (st.session_state.page - 1) * PAGE_SIZE
+    # end = min(start + PAGE_SIZE, TOTAL_ROWS)
 
-    # =====================
-    # TABLE (ATAS)
-    # =====================
-    st.dataframe(df_safe.iloc[start:end])
+    # # =====================
+    # # TABLE (ATAS)
+    # # =====================
+    # st.dataframe(df_safe.iloc[start:end])
 
-    st.caption(
-        f"Showing rows {start + 1:,} – {end:,} of {TOTAL_ROWS:,}"
-    )
+    # st.caption(
+    #     f"Showing rows {start + 1:,} – {end:,} of {TOTAL_ROWS:,}"
+    # )
 
-    # =====================
-    # PAGINATION (BAWAH)
-    # =====================
-    col1, col2, col3 = st.columns([1, 2, 1])
+    # # =====================
+    # # PAGINATION (BAWAH)
+    # # =====================
+    # col1, col2, col3 = st.columns([1, 2, 1])
 
-    with col1:
-        if st.button("⬅ Prev", disabled=st.session_state.page == 1):
-            st.session_state.page -= 1
-            st.rerun()
+    # with col1:
+    #     if st.button("⬅ Prev", disabled=st.session_state.page == 1):
+    #         st.session_state.page -= 1
+    #         st.rerun()
 
-    with col2:
-        left, center, right = st.columns([1, 2, 1])
+    # with col2:
+    #     left, center, right = st.columns([1, 2, 1])
 
-        with center:
-            st.markdown(
-                f"<p style='text-align:center; font-weight:600;'>"
-                f"Page {st.session_state.page} / {TOTAL_PAGES}"
-                f"</p>",
-                unsafe_allow_html=True
-            )
+    #     with center:
+    #         st.markdown(
+    #             f"<p style='text-align:center; font-weight:600;'>"
+    #             f"Page {st.session_state.page} / {TOTAL_PAGES}"
+    #             f"</p>",
+    #             unsafe_allow_html=True
+    #         )
 
-            page = st.number_input(
-                "",
-                min_value=1,
-                max_value=TOTAL_PAGES,
-                value=st.session_state.page,
-                step=1,
-                label_visibility="collapsed"
-            )
+    #         page = st.number_input(
+    #             "",
+    #             min_value=1,
+    #             max_value=TOTAL_PAGES,
+    #             value=st.session_state.page,
+    #             step=1,
+    #             label_visibility="collapsed"
+    #         )
 
-            if page != st.session_state.page:
-                st.session_state.page = page
-                st.rerun()
+    #         if page != st.session_state.page:
+    #             st.session_state.page = page
+    #             st.rerun()
 
-    with col3:
-        if st.button("Next ➡", disabled=st.session_state.page == TOTAL_PAGES):
-            st.session_state.page += 1
-            st.rerun()
+    # with col3:
+    #     if st.button("Next ➡", disabled=st.session_state.page == TOTAL_PAGES):
+    #         st.session_state.page += 1
+    #         st.rerun()
 
     # Tampilkan fitur/kolom
     st.subheader("Dataset Features")
@@ -98,9 +98,9 @@ if page == "Home":
     # Tampilkan describe
     st.subheader("Dataset Information")
     summary = pd.DataFrame({
-    "dtype": df_safe.dtypes.astype(str),
-    "missing": df_safe.isnull().sum(),
-    "unique": df_safe.nunique(),
+    "dtype": df.dtypes.astype(str),
+    "missing": df.isnull().sum(),
+    "unique": df.nunique(),
     })
     st.dataframe(summary)
 
