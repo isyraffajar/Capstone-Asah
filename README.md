@@ -29,13 +29,20 @@ Agar aplikasi berjalan lancar, pastikan struktur folder proyek Anda seperti beri
 ```
 ## 📥 Download Model
 
-Model machine learning (`model_clustering.pkl`) yang sudah dilatih disimpan secara terpisah di Google Drive. Silakan unduh dan letakkan di folder proyek Anda sebelum menjalankan aplikasi.
+Model machine learning (`model_clustering.pkl`) dan (`scaler.pkl`) yang sudah dilatih disimpan secara terpisah di Google Drive. Silakan unduh dan letakkan di folder proyek Anda sebelum menjalankan aplikasi.
+
+1.  **model_clustering.pkl**: Model algoritma K-Means.
+2.  **scaler.pkl**: Standard Scaler untuk menormalisasi input user agar sesuai dengan format model.
 
 🔗 **Link Google Drive:**
 
 > **[https://drive.google.com/file/d/1XXNZrmJGnPSLFf3FtI7LUFGPlTtNvICh/view?usp=sharing]**
+> **[https://drive.google.com/file/d/1nQpDGhNZDfJB6VSOD2oRPrHW-BAZivw4/view?usp=sharing]**
 
-*Catatan: Jika Anda ingin melatih model sendiri dari awal, Anda bisa melewati langkah ini dan menjalankan `CustomerSegmentation.ipynb`.*
+*Catatan: Jika Anda ingin melatih model sendiri dari awal, Anda bisa melewati langkah ini dan menjalankan `CustomerSegmentation.ipynb`.* Langkahnya :
+1.  Buka `CustomerSegmentation.ipynb`.
+2.  Jalankan semua sel (*Run All*).
+
 ## 🛠️ Teknologi & Library
 
   * **Python**: Bahasa pemrograman utama.
