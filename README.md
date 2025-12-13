@@ -19,12 +19,12 @@ Agar kedua aplikasi berjalan lancar, pastikan struktur folder proyek Anda sepert
 │   ├── OnlineRetail.csv        # Dataset mentah
 │   ├── rfm.csv                 # Data hasil RFM
 │   └── rfm_with_clusters.csv   # Data final dengan cluster
-├── model/ (atau Code/)
+├── Code/
+│   ├── CustomerSegmentation.ipynb  # Notebook pelatihan model
+│   ├── ui.py                       # Dashboard Analisis
+│   ├── app.py                      # Aplikasi Prediksi (New Features)
 │   ├── model_clustering.pkl    # Model KMeans yang sudah dilatih
 │   └── scaler.pkl              # Scaler untuk normalisasi data
-├── CustomerSegmentation.ipynb  # Notebook pelatihan model
-├── ui.py                       # Dashboard Analisis
-├── app.py                      # Aplikasi Prediksi (New Features)
 ├── requirements.txt            # Daftar library python
 └── README.md                   # Dokumentasi ini
 ````
@@ -39,6 +39,7 @@ Aplikasi prediksi (`app.py`) membutuhkan dua file biner agar bisa berjalan. Kare
 🔗 **Link Google Drive:**
 
 > **[https://drive.google.com/file/d/1XXNZrmJGnPSLFf3FtI7LUFGPlTtNvICh/view?usp=sharing]**
+> **[https://drive.google.com/file/d/1nQpDGhNZDfJB6VSOD2oRPrHW-BAZivw4/view?usp=sharing]**
 
 *Instruksi: Unduh kedua file tersebut dan letakkan di dalam folder `model/` (atau sesuaikan dengan path di dalam `app.py` Anda).*
 
@@ -59,7 +60,7 @@ Anda memiliki dua pilihan aplikasi yang bisa dijalankan sesuai kebutuhan:
 Gunakan aplikasi ini jika Anda ingin melihat performa data historis dan karakteristik tiap segmen.
 
 ```bash
-streamlit run ui.py
+streamlit run .\Code\ui.py
 ```
 
 **Fitur:**
@@ -73,7 +74,7 @@ streamlit run ui.py
 Gunakan aplikasi ini untuk menentukan segmen pelanggan baru secara *real-time*.
 
 ```bash
-streamlit run app.py
+streamlit run .\Code\app.py
 ```
 
 **Fitur:**
