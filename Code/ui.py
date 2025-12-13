@@ -95,7 +95,7 @@ if page == "Home":
     st.dataframe(summary)
 
     st.subheader("Descriptive Statistics")
-    st.dataframe(df.describe())
+    st.dataframe(df.describe(include=[np.number]))
 
 elif page == "Data Exploration":
     st.header("Explanatory Data Analysis (ExDA)")
