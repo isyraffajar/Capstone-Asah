@@ -1,122 +1,97 @@
-# Customer Segmentation Dashboard (Capstone Project - Asah) 🚀
+# Customer Segmentation System (Capstone Project - Asah) 🚀
 
 ![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
 ![Streamlit](https://img.shields.io/badge/Streamlit-App-red)
 ![Scikit-Learn](https://img.shields.io/badge/Machine%20Learning-KMeans-orange)
 
 ## 📌 Gambaran Proyek
-Proyek ini bertujuan untuk melakukan segmentasi pelanggan pada data transaksi ritel online (`OnlineRetail.csv`) menggunakan metode **RFM (Recency, Frequency, Monetary)** dan algoritma **K-Means Clustering**.
+Proyek ini adalah sistem end-to-end untuk segmentasi pelanggan ritel online. Proyek ini terdiri dari dua aplikasi utama:
+1.  **Dashboard Analisis (`ui.py`)**: Untuk menganalisis data historis, memvisualisasikan cluster, dan melihat wawasan bisnis.
+2.  **Aplikasi Prediksi (`app.py`)**: Untuk memprediksi segmen pelanggan baru, baik secara satuan (input manual) maupun massal (upload CSV).
 
-Hasil analisis disajikan dalam bentuk Dashboard Interaktif berbasis **Streamlit**, yang memungkinkan pengguna bisnis untuk melihat statistik data, visualisasi cluster, dan mendapatkan *insights* mengenai kelompok pelanggan (seperti pelanggan terbaik, pelanggan berisiko, dll).
+Metode yang digunakan adalah **RFM (Recency, Frequency, Monetary)** dan algoritma **K-Means Clustering**.
 
 ## 📂 Struktur Folder
-Agar aplikasi berjalan lancar, pastikan struktur folder proyek Anda seperti berikut:
+Agar kedua aplikasi berjalan lancar, pastikan struktur folder proyek Anda seperti berikut:
 
 ```text
-├── Assets/
 ├── Dataset/
-│   ├── OnlineRetail.csv            # Dataset mentah (sumber utama)
-│   ├── rfm.csv                     # Output dari Notebook (Data RFM)
-│   └── rfm_with_clusters.csv       # Output dari Notebook (Data + Label Cluster)
-├── Code/
-│   ├── CustomerSegmentation.ipynb  # Notebook untuk Data Cleaning, EDA, & Modeling
-│   ├── ui.py                       # Source code Dashboard Streamlit
-├── requirements.txt                # Daftar library python
-└── README.md                       # Dokumentasi ini
-```
-## 📥 Download Model
+│   ├── OnlineRetail.csv        # Dataset mentah
+│   ├── rfm.csv                 # Data hasil RFM
+│   └── rfm_with_clusters.csv   # Data final dengan cluster
+├── model/ (atau Code/)
+│   ├── model_clustering.pkl    # Model KMeans yang sudah dilatih
+│   └── scaler.pkl              # Scaler untuk normalisasi data
+├── CustomerSegmentation.ipynb  # Notebook pelatihan model
+├── ui.py                       # Dashboard Analisis
+├── app.py                      # Aplikasi Prediksi (New Features)
+├── requirements.txt            # Daftar library python
+└── README.md                   # Dokumentasi ini
+````
 
-Model machine learning (`model_clustering.pkl`) yang sudah dilatih disimpan secara terpisah di Google Drive. Silakan unduh dan letakkan di folder proyek Anda sebelum menjalankan aplikasi.
+## 📥 Download Model & Scaler (Wajib untuk app.py)
+
+Aplikasi prediksi (`app.py`) membutuhkan dua file biner agar bisa berjalan. Karena ukuran file atau alasan portabilitas, file ini disimpan di Google Drive.
+
+1.  **model\_clustering.pkl**: Model algoritma K-Means.
+2.  **scaler.pkl**: Standard Scaler untuk menormalisasi input user agar sesuai dengan format model.
 
 🔗 **Link Google Drive:**
 
 > **[https://drive.google.com/file/d/1XXNZrmJGnPSLFf3FtI7LUFGPlTtNvICh/view?usp=sharing]**
 
-*Catatan: Jika Anda ingin melatih model sendiri dari awal, Anda bisa melewati langkah ini dan menjalankan `CustomerSegmentation.ipynb`.*
-## 🛠️ Teknologi & Library
+*Instruksi: Unduh kedua file tersebut dan letakkan di dalam folder `model/` (atau sesuaikan dengan path di dalam `app.py` Anda).*
 
-  * **Python**: Bahasa pemrograman utama.
-  * **Streamlit**: Framework untuk membuat antarmuka web dashboard.
-  * **Pandas & NumPy**: Manipulasi dan analisis data tabular.
-  * **Scikit-Learn**:
-      * `StandardScaler`: Normalisasi data.
-      * `KMeans`: Algoritma clustering.
-      * `silhouette_score`: Evaluasi kualitas cluster.
-  * **Matplotlib & Seaborn**: Visualisasi grafik statis.
+## 🛠️ Instalasi
 
-## 🚀 Fitur Dashboard (Streamlit)
-
-Aplikasi `ui.py` memiliki menu navigasi di sidebar dengan fitur sebagai berikut:
-
-### 1\. 🏠 Home
-
-  * Menampilkan gambaran umum dataset.
-  * Statistik deskriptif data.
-  * Informasi tipe data dan *missing values*.
-
-### 2\. 🔍 Data Exploration
-
-  * Visualisasi distribusi data menggunakan Boxplot (Quantity & Unit Price).
-  * Analisis persebaran transaksi berdasarkan negara (Pie Chart).
-
-### 3\. 🤖 Modeling (Clustering)
-
-  * **Evaluasi Model**: Grafik *Elbow Method* dan *Silhouette Score* untuk menentukan jumlah cluster optimal ($K$).
-  * **Visualisasi Cluster**: Scatter plot interaktif yang membandingkan:
-      * Recency vs Frequency
-      * Frequency vs Monetary
-      * Recency vs Monetary
-  * **Distribusi Cluster**: Boxplot untuk melihat karakteristik R, F, dan M pada setiap cluster.
-
-### 4\. 💡 Insights
-
-Halaman ini memberikan rekomendasi bisnis dengan memfilter pelanggan ke dalam kategori:
-
-  * **Cluster Summary**: Rata-rata metrik RFM per cluster.
-  * **Most Spent Customers**: Pelanggan dengan pengeluaran (`Monetary`) tertinggi di cluster tertentu.
-  * **Best Customers**: Pelanggan dengan skor RFM terbobot tertinggi.
-  * **Newest Customers**: Pelanggan yang baru saja bertransaksi namun frekuensinya belum tinggi.
-  * **At Risk Customers**: Pelanggan yang dulu sering bertransaksi tapi sudah lama tidak kembali (Recency tinggi).
-  * **Regular Customers**: Pelanggan dengan pola transaksi rata-rata (menengah).
-
-## ⚙️ Cara Menjalankan
-
-### Langkah 1: Instalasi
-
-Pastikan Python sudah terinstall, lalu install library yang dibutuhkan:
+Install library yang dibutuhkan (termasuk `plotly` untuk grafik di app baru):
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 2\. Persiapan Model & Data
+## 🚀 Cara Menjalankan Aplikasi
 
-Anda memiliki dua opsi:
+Anda memiliki dua pilihan aplikasi yang bisa dijalankan sesuai kebutuhan:
 
-  * **Opsi A (Cepat):** Download `model_clustering.pkl` dari link Google Drive di atas, lalu pastikan file CSV (`rfm.csv`, `rfm_with_clusters.csv`) sudah tersedia di folder `Dataset/`.
-  * **Opsi B (Training Ulang):** Buka dan jalankan semua sel di `CustomerSegmentation.ipynb` untuk menghasilkan file model dan data CSV baru.
+### 1\. Menjalankan Dashboard Analisis (Untuk Bisnis & Insight)
 
-### Langkah 3: Menjalankan Dashboard
-
-Ada dua opsi untuk menjalankan dashboard, yaitu lewat localhost atau versi deploy. Berikut cara menjalankan keduanya :
-#### 1. Jalankan di Browser yang sudah di deploy
-
-Untuk run web yang sudah di deploy, tinggal buka link ini : [asah-a25-cs305.streamlit.app](https://asah-a25-cs305.streamlit.app)
-
-
-#### 2. jalankan di Browser localhost
-
-Buka folder Projeknya.
-
-Buka new Terminal (Ctrl + Shift + ') jika di VSCode.
-
-Jalankan perintah berikut di terminal:
+Gunakan aplikasi ini jika Anda ingin melihat performa data historis dan karakteristik tiap segmen.
 
 ```bash
-streamlit run Code/ui.py
+streamlit run ui.py
 ```
 
-Aplikasi akan otomatis terbuka di browser Anda (biasanya di `http://localhost:8501`). (Bisa berbeda tiap device).
+**Fitur:**
+
+  * Overview & Statistik Data.
+  * Visualisasi Cluster (Scatter Plot & Box Plot).
+  * Rekomendasi Bisnis (Best Customers, At Risk, dll).
+
+### 2\. Menjalankan Aplikasi Prediksi (Untuk Operasional)
+
+Gunakan aplikasi ini untuk menentukan segmen pelanggan baru secara *real-time*.
+
+```bash
+streamlit run app.py
+```
+
+**Fitur:**
+
+  * **Input Manual (Sidebar)**: Masukkan nilai *Recency*, *Frequency*, dan *Monetary* satu per satu untuk melihat hasil segmen pelanggan tersebut secara instan.
+  * **Batch Prediction**: Upload file CSV berisi data banyak pelanggan sekaligus.
+      * *Syarat CSV*: Harus memiliki kolom `Recency`, `Frequency`, dan `Monetary`.
+  * **Visualisasi Distribusi**: Grafik batang interaktif (Plotly) yang menunjukkan persebaran hasil prediksi.
+  * **Download Hasil**: Unduh hasil segmentasi massal ke dalam format CSV.
+
+## ⚙️ Pelatihan Ulang Model (Opsional)
+
+Jika Anda ingin memperbarui model dengan data terbaru:
+
+1.  Buka `CustomerSegmentation.ipynb`.
+2.  Jalankan semua sel (*Run All*).
+3.  Pastikan kode bagian bawah notebook menyimpan file `model_clustering.pkl` dan `scaler.pkl`.
+4.  Pindahkan file output tersebut ke folder yang sesuai agar terbaca oleh `app.py`.
 
 -----
 
