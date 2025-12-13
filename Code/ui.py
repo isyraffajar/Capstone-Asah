@@ -10,15 +10,6 @@ rfm = pd.read_csv("Dataset/rfm.csv", encoding="latin1")
 rfmc = pd.read_csv("Dataset/rfm_with_clusters.csv", encoding="latin1")
 df = pd.read_csv("Dataset/OnlineRetail.csv", encoding="latin1")
 
-# def make_arrow_safe(df):
-#     df_safe = df.copy()
-#     for col in df_safe.columns:
-#         if df_safe[col].dtype == "object":
-#             df_safe[col] = df_safe[col].astype(str)
-#     return df_safe
-
-# df_safe = make_arrow_safe(df)
-
 st.title("Capstone Project - Asah")
 st.sidebar.title("Page")
 st.sidebar.markdown("Select a page to navigate through the app.")
@@ -39,18 +30,12 @@ if page == "Home":
     start = (st.session_state.page - 1) * PAGE_SIZE
     end = min(start + PAGE_SIZE, TOTAL_ROWS)
 
-    # =====================
-    # TABLE (ATAS)
-    # =====================
     st.dataframe(df.iloc[start:end])
 
     st.caption(
         f"Showing rows {start + 1:,} – {end:,} of {TOTAL_ROWS:,}"
     )
 
-    # =====================
-    # PAGINATION (BAWAH)
-    # =====================
     col1, col2, col3 = st.columns([1, 2, 1])
 
     with col1:
