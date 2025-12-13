@@ -97,7 +97,6 @@ Halaman ini digunakan untuk mencoba input data Customer secara manual, kemudian 
 
   * **Input Manual (Sidebar)**: Masukkan nilai *Recency*, *Frequency*, dan *Monetary* satu per satu untuk melihat hasil segmen pelanggan tersebut secara instan.
   * **Visualisasi Distribusi**: Grafik batang interaktif (Plotly) yang menunjukkan persebaran hasil prediksi.
-  * **Download Hasil**: Unduh hasil segmentasi massal ke dalam format CSV.
 
 ## ⚙️ Cara Menjalankan
 
