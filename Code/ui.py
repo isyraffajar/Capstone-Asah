@@ -31,6 +31,8 @@ page = st.sidebar.selectbox("Choose your page", ["Home", "Data Exploration", "Mo
 if page == "Home":
     st.header("Welcome to the Capstone Project - Asah")
     st.subheader("Dataset Preview")
+    df_preview = df.head(10)
+    st.dataframe(df_preview)
 
     # PAGE_SIZE = 1000
     # TOTAL_ROWS = len(df)
