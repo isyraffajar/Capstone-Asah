@@ -20,9 +20,66 @@ page = st.sidebar.selectbox("Choose your page", ["Home", "Data Exploration", "Mo
 
 if page == "Home":
     st.header("Welcome to the Capstone Project - Asah")
-    st.subheader("Dataset Overview")
+    st.subheader("Dataset Preview")
 
-    st.dataframe(df)
+    PAGE_SIZE = 1000
+    TOTAL_ROWS = len(df)
+    TOTAL_PAGES = (TOTAL_ROWS - 1) // PAGE_SIZE + 1
+
+    # Init state
+    if "page" not in st.session_state:
+        st.session_state.page = 1
+
+    start = (st.session_state.page - 1) * PAGE_SIZE
+    end = min(start + PAGE_SIZE, TOTAL_ROWS)
+
+    # =====================
+    # TABLE (ATAS)
+    # =====================
+    st.dataframe(df.iloc[start:end])
+
+    st.caption(
+        f"Showing rows {start + 1:,} – {end:,} of {TOTAL_ROWS:,}"
+    )
+
+    # =====================
+    # PAGINATION (BAWAH)
+    # =====================
+    col1, col2, col3 = st.columns([1, 2, 1])
+
+    with col1:
+        if st.button("⬅ Prev", disabled=st.session_state.page == 1):
+            st.session_state.page -= 1
+            st.rerun()
+
+    with col2:
+        left, center, right = st.columns([1, 2, 1])
+
+        with center:
+            st.markdown(
+                f"<p style='text-align:center; font-weight:600;'>"
+                f"Page {st.session_state.page} / {TOTAL_PAGES}"
+                f"</p>",
+                unsafe_allow_html=True
+            )
+
+            page = st.number_input(
+                "",
+                min_value=1,
+                max_value=TOTAL_PAGES,
+                value=st.session_state.page,
+                step=1,
+                label_visibility="collapsed"
+            )
+
+            if page != st.session_state.page:
+                st.session_state.page = page
+                st.rerun()
+
+    with col3:
+        if st.button("Next ➡", disabled=st.session_state.page == TOTAL_PAGES):
+            st.session_state.page += 1
+            st.rerun()
 
     # Tampilkan fitur/kolom
     st.subheader("Dataset Features")

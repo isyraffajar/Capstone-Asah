@@ -98,13 +98,25 @@ Anda memiliki dua opsi:
 
 ### Langkah 3: Menjalankan Dashboard
 
+Ada dua opsi untuk menjalankan dashboard, yaitu lewat localhost atau versi deploy. Berikut cara menjalankan keduanya :
+#### 1. Jalankan di Browser yang sudah di deploy
+
+Untuk run web yang sudah di deploy, tinggal buka link ini : [asah-a25-cs305.streamlit.app](https://asah-a25-cs305.streamlit.app)
+
+
+#### 2. jalankan di Browser localhost
+
+Buka folder Projeknya.
+
+Buka new Terminal (Ctrl + Shift + ') jika di VSCode.
+
 Jalankan perintah berikut di terminal:
 
 ```bash
-streamlit run ui.py
+streamlit run Code/ui.py
 ```
 
-Aplikasi akan otomatis terbuka di browser Anda (biasanya di `http://localhost:8501`).
+Aplikasi akan otomatis terbuka di browser Anda (biasanya di `http://localhost:8501`). (Bisa berbeda tiap device).
 
 -----
 
