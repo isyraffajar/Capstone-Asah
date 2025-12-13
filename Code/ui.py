@@ -88,7 +88,7 @@ if page == "Home":
     # Tampilkan describe
     st.subheader("Dataset Information")
     summary = pd.DataFrame({
-            "dtype": df.dtypes,
+            "dtype": df.dtypes.astype(str),
             "missing": df.isnull().sum(),
             "unique": df.nunique(),
             })
