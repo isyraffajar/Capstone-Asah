@@ -20,7 +20,10 @@ Agar aplikasi berjalan lancar, pastikan struktur folder proyek Anda seperti beri
 │   └── rfm_with_clusters.csv       # Output dari Notebook (Data + Label Cluster)
 ├── Code/
 │   ├── CustomerSegmentation.ipynb  # Notebook untuk Data Cleaning, EDA, & Modeling
-│   ├── ui.py                       # Source code Dashboard Streamlit
+│   └── ui.py                       # Source code Dashboard Streamlit
+├── Model/
+│   ├── model_clustering.pkl    # Model KMeans yang sudah dilatih
+│   └── scaler.pkl              # Scaler untuk normalisasi data
 ├── requirements.txt                # Daftar library python
 └── README.md                       # Dokumentasi ini
 ```
