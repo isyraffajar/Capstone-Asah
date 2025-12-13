@@ -13,6 +13,15 @@ rfm = pd.read_csv("Dataset/rfm.csv", encoding="latin1")
 rfmc = pd.read_csv("Dataset/rfm_with_clusters.csv", encoding="latin1")
 df = pd.read_csv("Dataset/OnlineRetail.csv", encoding="latin1")
 
+def make_arrow_safe(df):
+    df_safe = df.copy()
+    for col in df_safe.columns:
+        if df_safe[col].dtype == "object":
+            df_safe[col] = df_safe[col].astype(str)
+    return df_safe
+
+df_safe = make_arrow_safe(df)
+
 st.title("Capstone Project - Asah")
 st.sidebar.title("Page")
 st.sidebar.markdown("Select a page to navigate through the app.")
@@ -36,7 +45,7 @@ if page == "Home":
     # =====================
     # TABLE (ATAS)
     # =====================
-    st.dataframe(df.iloc[start:end])
+    st.dataframe(df_safe.iloc[start:end])
 
     st.caption(
         f"Showing rows {start + 1:,} – {end:,} of {TOTAL_ROWS:,}"
@@ -88,10 +97,10 @@ if page == "Home":
     # Tampilkan describe
     st.subheader("Dataset Information")
     summary = pd.DataFrame({
-            "dtype": df.dtypes.astype(str),
-            "missing": df.isnull().sum(),
-            "unique": df.nunique(),
-            })
+    "dtype": df_safe.dtypes.astype(str),
+    "missing": df_safe.isnull().sum(),
+    "unique": df_safe.nunique(),
+    })
     st.dataframe(summary)
 
     st.subheader("Descriptive Statistics")
